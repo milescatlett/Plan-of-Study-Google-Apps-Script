@@ -1,0 +1,202 @@
+//This sheet allows you to take content from a Google sheet and post it into a document.
+//The Google sheet is set up according to NC graduation requirements.
+
+function docFunction() {
+
+// Get document template, copy it as a new temp doc, and save the Doc’s id
+// Change the values below
+   var docTemplate = "1ZlGTsabPTWurRcoylXcsuypPfVL5MuP4-cvz9upH1kY"; // *** replace with your template ID ***
+   var docName = "Plan of Study Progress"; // *** specify the name of the document ***
+   var sheetName = "2014"; // ***specify the name of the sheet you want to pull data from***
+  
+// Check values on columns below to see if they match
+  var sheet = SpreadsheetApp.openById("1zNMmNDcXKMNSCz9TjKhUWRI6qVx3YWzWyHIiVEGetxE").getSheetByName(sheetName);
+  var startRow = 2;  // First row of data to process
+  var startCol = 1;  // First column of data to process
+  var numCols = 191;  // Number of columns to process
+  var numRows = sheet.getLastRow()-1;   // Number of rows to process
+  // Fetch the range of cells 
+  var dataRange = sheet.getRange(startRow, startCol, numRows, numCols)
+  // Fetch values for each row in the Range.
+  var data = dataRange.getValues();
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!! LOOP STARTS HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //Now this loop below should take us through, one row at a time, creating a new doc for each row.
+  //Create a new variable for each item inside the loop, so that it makes a new document for each student
+  //There are a lot of extra variables below, they are for future projects, fields from the Google Sheet
+  for (i in data) {
+    var row = data[i];
+    var colA = row[0];  // A column, student name
+    var colB = row[1];  // B column, Report Date
+    var colC = row[2];  // C column, HS Req. Remaining
+    var colD = row[3];  // D column, Col. Req. Remaining
+    var colE = row[4];  // E column, Other Col. Taken
+    var colF = row[5];  // F column, HS Credits (28)
+    var colG = row[6];  // G column, College Credits (60)
+    var colH = row[7];  // H column, ACT/SAT Met (17 or 800)
+    var colI = row[8];  // I column, Low GPA? (3.0 W for HS, 2.2 Col)
+    var colJ = row[9];  // J column, 5th year
+    var colK = row[10];  // K column, Accuplacer
+    var colL = row[11];  // L column, Currently scheduled for
+ //This is where the course list starts, these values will be "P"
+    var colM = row[13];  // N column, Fnds of Eng
+    var colP = row[15];  // P column, English I
+    var colR = row[17];  // R column, English II
+    var colT = row[19];  // T column, English III
+    var colV = row[21];  // V column, English IV
+    var colX = row[23];  // X column, ENG111
+    var colAA = row[26];  // AA column, ENG112
+    var colAD = row[29];  // AD column, ENG232
+    var colAG = row[32];  // AG column, ENG241
+    var colAJ = row[35];  // AJ column, Fnds Math I
+    var colAL = row[37];  // AL column, Fnds Math II/III
+    var colAN = row[39];  // AN column, Math I
+    var colAP = row[41];  // AP column, Math II
+    var colAR = row[43];  // AR column, Math III
+    var colAT = row[45];  // AT column,HS 4th Math
+    var colAV = row[47];  // AV column, MAT143
+    var colAY = row[50];  // AY column, MAT152
+    var colBB = row[53];  // BB column, MAT 171
+    var colBE = row[56];  // BE column, MAT172
+    var colBH = row[59];  // BH column, Civics/Econ
+    var colBJ = row[61];  // BJ column, World His
+    var colBL = row[63];  // BL column, American I
+    var colBN = row[65];  // BN column, American II
+    var colBP = row[67];  // BP column, HIS111
+    var colBS = row[70];  // BS column, HIS112
+    var colBV = row[73];  // BV column, SOC210
+    var colBY = row[76];  // BY column, PSY150
+    var colCB = row[79];  // CB column, Earth/Envir
+    var colCD = row[81];  // CD column, Physical
+    var colCF = row[83];  // CF column, Biology
+    var colCH = row[85];  // CH column, BIO111
+    var colCK = row[88];  // CK column, CHM131/131A
+    var colCN = row[91];  // CN column, SPA111
+    var colCQ = row[94];  // CQ column, SPA112
+    var colCT = row[97];  // CT column, SPA211
+    var colCW = row[100];  // CW column, SPA212
+    var colCZ = row[103];  // CZ column, HS Lang 1
+    var colDB = row[105];  // DB column, HS Lang 2
+    var colDD = row[107];  // DD column, HEA110
+    var colDG = row[110];  // DG column, PED111
+    var colDJ = row[113];  // DJ column, PED117
+    var colDM = row[116];  // DM column, ACA122
+    var colDP = row[119];  // DP column, ART111
+    var colDS = row[122];  // DS column, MUS110
+    var colDV = row[125];  // DV column, COM231
+    var colDY = row[128];  // DY column, PSY241
+    var colEB = row[131];  // EB column, HIS131
+    var colEE = row[134];  // EE column, HIS132
+    var colEH = row[137];  // EH column, HUM180
+    var colEK = row[140];  // EK column, MAT271
+    var colEN = row[143];  // EN column, BIO112
+    var colEQ = row[146];  // EQ column,CHM151
+    var colET = row[149];  // ET column, CHM152
+    var colEW = row[152];  // EW column, Fresh Sem
+    var colEZ = row[155];  // EZ column, Career Suc.
+    var colFC = row[158];  // FC column, SAT Prep
+    var colFF = row[161];  // FF column, Ready
+    var colFI = row[164];  // FI column, YRBK
+    var colFK = row[166];  // FK column, YRBK
+    var colFM = row[168];  // FM column, Yrbk
+    var colFO = row[170];  // FO column, Yrbk
+    var colFQ = row[172];  // FQ column, COL Elec
+    var colFT = row[175];  // FT column, COL Elec
+    var colFW = row[178];  // FW column, COL Elec
+    var colFZ = row[181];  // FZ column, CW
+    var colFB = row[183];  // FB column, PROF/MANG
+    var colFD = row[185];  // FD column, CCS
+    var colGF = row[187];  // GF column, PE
+    var colGH = row[189];  // GH column, LL
+    var colGJ = row[191];  // GJ column, LL
+
+ //Get the template and create a new document for each student
+   var documentName = docName+', cohort '+sheetName+', '+colA+', '+colB;
+   var folder = DriveApp.getFolderById('0B83Gtw9rWvHUV2I2Mmg3UTliN0E');
+   var copyId = DriveApp.getFileById(docTemplate).makeCopy(documentName, folder).getId();
+ // Open the temporary document
+   var copyDoc = DocumentApp.openById(copyId);  
+// Get the document’s body section
+var copyBody = copyDoc.getActiveSection();
+// Replace place holder keys,in our google doc template *** don't use numbers in the names!
+  copyBody.replaceText('keyName', colA);
+  copyBody.replaceText('keyDate', colB);
+  copyBody.replaceText('keyCohort', sheetName);
+//Add in courses with if then and copybody commands
+//English
+   if (colP == 'P') { copyBody.replaceText('keyEnglish1', 'English I Honors'); } 
+    else { copyBody.replaceText('keyEnglish1', 'Not met'); }
+   if (colR == 'P') { copyBody.replaceText('keyEnglish2', 'English II Honors'); } 
+    else { copyBody.replaceText('keyEnglish2', 'Not met'); }
+   if (colT == 'P' && colAD != 'P') { copyBody.replaceText('keyEnglish3', 'English III Honors'); } 
+    else if (colAD == 'P') { copyBody.replaceText('keyEnglish3', 'ENG-232 American Literature II (CAA)'); }
+    else { copyBody.replaceText('keyEnglish3', 'Not met'); }
+   if (colV == 'P' && colAG != 'P') { copyBody.replaceText('keyEnglish4', 'English IV Honors'); } 
+    else if (colV == 'P' && colAG == 'P') { copyBody.replaceText('keyEnglish4', 'ENG-241 British Literature I (CAA)'); }
+    else { copyBody.replaceText('keyEnglish4', 'Not met'); }
+//Math
+   if (colAN == 'P') { copyBody.replaceText('keyMath1', 'Math I'); } 
+    else { copyBody.replaceText('keyMath1', 'Not met'); }
+   if (colAP == 'P') { copyBody.replaceText('keyMath2', 'Math II Honors'); } 
+    else { copyBody.replaceText('keyMath2', 'Not met'); }
+   if (colAR == 'P') { copyBody.replaceText('keyMath3', 'Math III Honors'); } 
+    else { copyBody.replaceText('keyMath3', 'Not met'); }
+   if (colAT == 'P' && (colAV != 'P' && colAY != 'P' && colBB != 'P' && colBE != 'P')) { copyBody.replaceText('keyMath4', 'Essentials of College Math or Accounting I'); } 
+    else if (colAT == 'P' && colAV == 'P') { copyBody.replaceText('keyMath4', 'MAT-143 Quantitative Literacy (CAA)'); }
+    else if (colAT == 'P' && colAY == 'P') { copyBody.replaceText('keyMath4', 'MAT-152 Statistical Methods I (CAA)'); }
+    else if (colAT == 'P' && colBB == 'P') { copyBody.replaceText('keyMath4', 'MAT-171 Precalculus Algebra (CAA) (CAA)'); }
+    else if (colAT == 'P'&& colBE == 'P') { copyBody.replaceText('keyMath4', 'MAT-172 Precalculus Trigonometry (CAA)'); }
+    else { copyBody.replaceText('keyMath4', 'Not met'); }    
+//Social Studies
+   if (colBJ == 'P') { copyBody.replaceText('keySS1', 'World History Honors'); } 
+    else { copyBody.replaceText('keySS1', 'Not met'); }
+   if (colBH == 'P') { copyBody.replaceText('keySS2', 'Amer His: Civics and Econ'); } 
+    else { copyBody.replaceText('keySS2', 'Not met'); }
+   if (colBL == 'P' && colBP != 'P') { copyBody.replaceText('keySS3', 'American History I Honors'); } 
+    else if (colBL == 'P' && colBP == 'P') { copyBody.replaceText('keySS3', 'HIS-131 American History I (CAA)'); }
+    else { copyBody.replaceText('keySS3', 'Not met'); }
+   if (colBN == 'P' && colBS != 'P') { copyBody.replaceText('keySS4', 'American History II Honors'); } 
+    else if (colBN == 'P' && colBS == 'P') { copyBody.replaceText('keySS4', 'HIS-132 American History II (CAA)'); }
+    else { copyBody.replaceText('keySS4', 'Not met'); }    
+//Science    
+   if (colCB == 'P') { copyBody.replaceText('keyScience1', 'Earth and Environ Sci Honors'); } 
+    else { copyBody.replaceText('keyScience1', 'Not met'); }
+   if (colCD == 'P') { copyBody.replaceText('keyScience2', 'Physical Science'); } 
+    else { copyBody.replaceText('keyScience2', 'Not met'); }
+   if (colCF == 'P') { copyBody.replaceText('keyScience3', 'Biology Honors'); } 
+    else if (colCH == 'P' && colEN == 'P') { copyBody.replaceText('keyScience3', 'BIO-111 General Biology I (CAA) and BIO-112 General Biology II (CAA)'); }
+    else { copyBody.replaceText('keyScience3', 'Not met'); }
+//Health and PE
+   if (colDD == 'P') { copyBody.replaceText('keyHEA', 'HEA-110 Personal Health/Wellness (CAA)'); } 
+    else { copyBody.replaceText('keyHEA', 'Not met'); }
+   if (colDG == 'P') { copyBody.replaceText('keyPE', 'PED-111 Physical Fitness I (CAA)'); } 
+    else { copyBody.replaceText('keyPE', 'Not met'); }
+//Foreign Language
+   if (colCN == 'P') { copyBody.replaceText('keyFL1', 'SPA-111 Elementary Spanish I (CAA)'); } 
+    else if (colCN != 'P' && colCT == 'P') { copyBody.replaceText('keyFL1', 'SPA-211 Intermediate Spanish I (CAA)'); }
+    else if (colCN != 'P' && colCZ == 'P') { copyBody.replaceText('keyFL1', 'German I'); }
+    else { copyBody.replaceText('keyFL1', 'Not met'); }
+   if (colCQ == 'P') { copyBody.replaceText('keyFL2', 'SPA-112 Elementary Spanish II (CAA)'); } 
+    else if (colCQ != 'P' && colCW == 'P') { copyBody.replaceText('keyFL2', 'SPA-212 Intermediate Spanish II (CAA)'); }
+    else if (colCQ != 'P' && colDB == 'P') { copyBody.replaceText('keyFL2', 'German II'); }
+    else { copyBody.replaceText('keyFL2', 'Not met'); }    
+//Seminar courses
+   if (colEW == 'P') { copyBody.replaceText('keySem1', 'Freshman Seminar'); } 
+    else { copyBody.replaceText('keySem1', 'Not met'); }
+   if (colEZ == 'P') { copyBody.replaceText('keySem2', 'Creating Career Success'); } 
+    else { copyBody.replaceText('keySem2', 'Not met'); }
+   if (colFC == 'P') { copyBody.replaceText('keySem3', 'SAT/ACT Preparation'); } 
+    else { copyBody.replaceText('keySem3', 'Not met'); }
+   if (colFF == 'P') { copyBody.replaceText('keySem4', 'Ready for College'); } 
+    else { copyBody.replaceText('keySem4', 'Not met'); }     
+//Other items
+    copyBody.replaceText('keyHScred', colF);
+    copyBody.replaceText('keyCOLcred', colG);
+    copyBody.replaceText('keyAccu', colK);
+    copyBody.replaceText('keyGPA', colI);
+    copyBody.replaceText('keyACT', colH);
+
+// Save and close the document
+  copyDoc.saveAndClose();
+  }
+}
