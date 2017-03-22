@@ -5,12 +5,13 @@ function docFunction() {
 
 // Get document template, copy it as a new temp doc, and save the Doc’s id
 // Change the values below
-   var docTemplate = "1ZlGTsabPTWurRcoylXcsuypPfVL5MuP4-cvz9upH1kY"; // *** replace with your template ID ***
+   var docTemplate = "insert the unique identifier for the document template here"; // *** replace with your template ID ***
+   var sheetPlanofStudy = "insert the unique identifier for the Plan of Study Google Sheet here";
    var docName = "Plan of Study Progress"; // *** specify the name of the document ***
    var sheetName = "2014"; // ***specify the name of the sheet you want to pull data from***
   
 // Check values on columns below to see if they match
-  var sheet = SpreadsheetApp.openById("1zNMmNDcXKMNSCz9TjKhUWRI6qVx3YWzWyHIiVEGetxE").getSheetByName(sheetName);
+  var sheet = SpreadsheetApp.openById(sheetPlanofStudy).getSheetByName(sheetName);
   var startRow = 2;  // First row of data to process
   var startCol = 1;  // First column of data to process
   var numCols = 191;  // Number of columns to process
