@@ -3,19 +3,18 @@
 
 function docFunction() {
 
-// Get document template, copy it as a new temp doc, and save the Doc’s id
 // Change the values below
    var docTemplate = "insert the unique identifier for the document template here"; // *** replace with your template ID ***
    var sheetPlanofStudy = "insert the unique identifier for the Plan of Study Google Sheet here";
    var folder = DriveApp.getFolderById('insert the unique identifier for the folder where you want to store your new docs');
    var docName = "Plan of Study Progress"; // *** specify the name of the document ***
    var sheetName = "2014"; // ***specify the name of the sheet you want to pull data from***
+   var startRow = 2;  // *** indicate the first row of data
+   var startCol = 1;  // ***indicate the first column of data
+   var numCols = 191;  // ***indicate the num of columns of data in the sheet you want to access
   
 // Check values on columns below to see if they match
   var sheet = SpreadsheetApp.openById(sheetPlanofStudy).getSheetByName(sheetName);
-  var startRow = 2;  // First row of data to process
-  var startCol = 1;  // First column of data to process
-  var numCols = 191;  // Number of columns to process
   var numRows = sheet.getLastRow()-1;   // Number of rows to process
   // Fetch the range of cells 
   var dataRange = sheet.getRange(startRow, startCol, numRows, numCols)
@@ -112,6 +111,7 @@ function docFunction() {
     var colGH = row[189];  // GH column, LL
     var colGJ = row[191];  // GJ column, LL
 
+// Now we will get the document template, copy it as a new doc, and save the id
  //Get the template and create a new document for each student
    var documentName = docName+', cohort '+sheetName+', '+colA+', '+colB;
    var copyId = DriveApp.getFileById(docTemplate).makeCopy(documentName, folder).getId();
@@ -119,7 +119,7 @@ function docFunction() {
    var copyDoc = DocumentApp.openById(copyId);  
 // Get the document’s body section
 var copyBody = copyDoc.getActiveSection();
-// Replace place holder keys,in our google doc template *** don't use numbers in the names!
+// Replace place holder keys in our google doc template *** don't use numbers in the names!
   copyBody.replaceText('keyName', colA);
   copyBody.replaceText('keyDate', colB);
   copyBody.replaceText('keyCohort', sheetName);
